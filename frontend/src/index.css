@@ -1,68 +1,217 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: #000B1A;
+  color: #ffffff;
+  overflow-x: hidden;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.glass-panel-green {
+  background: linear-gradient(135deg, rgba(104, 231, 142, 0.9) 0%, rgba(46, 160, 67, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.glass-pill {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fan-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.doc-card {
+  position: absolute;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Featured card background — defined as a class so light mode can override it */
+.featured-card-bg {
+  background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 40%, rgba(104,231,142,0.9) 60%, #16a34a 100%);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== LIGHT MODE OVERRIDES (html:not(.dark)) ===== */
+
+html:not(.dark) body {
+  background-color: #F8F9FA;
+  color: #1A1A1A;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+html:not(.dark) .glass-panel {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) .glass-panel-green {
+  background: linear-gradient(135deg, rgba(45, 91, 255, 0.9) 0%, rgba(26, 58, 191, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+html:not(.dark) .glass-pill {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark) .doc-card {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12);
+}
+
+html:not(.dark) .featured-card-bg {
+  background: linear-gradient(135deg, #FFFFFF 0%, #D8E1FF 40%, #2D5BFF 60%, #1A3ABF 100%);
+}
+
+html:not(.dark) .shadow-green-glow {
+  box-shadow: 0 0 40px -10px rgba(45, 91, 255, 0.4);
+}
+
+/* Ghost card backgrounds in light mode (override inline styles) */
+html:not(.dark) .doc-card > .rounded-2xl {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Ghost card title labels in light mode */
+html:not(.dark) .doc-card > .rounded-2xl .absolute.bottom-2 {
+  color: rgba(26, 26, 26, 0.5) !important;
+}
+
+/* === Text color overrides: white → dark === */
+
+html:not(.dark) .text-white { color: #1A1A1A; }
+html:not(.dark) .text-white\/90 { color: rgba(26, 26, 26, 0.9); }
+html:not(.dark) .text-white\/80 { color: rgba(26, 26, 26, 0.8); }
+html:not(.dark) .text-white\/70 { color: rgba(26, 26, 26, 0.7); }
+html:not(.dark) .text-white\/60 { color: rgba(26, 26, 26, 0.6); }
+html:not(.dark) .text-white\/50 { color: rgba(26, 26, 26, 0.5); }
+html:not(.dark) .text-white\/40 { color: rgba(26, 26, 26, 0.4); }
+html:not(.dark) .text-white\/30 { color: rgba(26, 26, 26, 0.3); }
+html:not(.dark) .text-white\/20 { color: rgba(26, 26, 26, 0.2); }
+html:not(.dark) .text-white\/10 { color: rgba(26, 26, 26, 0.1); }
+
+/* Restore white text inside gradient panels (higher specificity wins) */
+html:not(.dark) .glass-panel-green .text-white { color: white; }
+html:not(.dark) .glass-panel-green .text-white\/90 { color: rgba(255,255,255,0.9); }
+html:not(.dark) .glass-panel-green .text-white\/80 { color: rgba(255,255,255,0.8); }
+html:not(.dark) .glass-panel-green .text-white\/70 { color: rgba(255,255,255,0.7); }
+html:not(.dark) .glass-panel-green .text-white\/60 { color: rgba(255,255,255,0.6); }
+html:not(.dark) .glass-panel-green .text-white\/50 { color: rgba(255,255,255,0.5); }
+html:not(.dark) .glass-panel-green .text-white\/40 { color: rgba(255,255,255,0.4); }
+html:not(.dark) .glass-panel-green .text-white\/30 { color: rgba(255,255,255,0.3); }
+
+/* === Background overrides: white/* → black/* === */
+
+html:not(.dark) .bg-white\/5 { background-color: rgba(0,0,0,0.03); }
+html:not(.dark) .bg-white\/10 { background-color: rgba(0,0,0,0.05); }
+html:not(.dark) .bg-white\/15 { background-color: rgba(0,0,0,0.07); }
+html:not(.dark) .bg-white\/20 { background-color: rgba(0,0,0,0.08); }
+html:not(.dark) .bg-white\/30 { background-color: rgba(0,0,0,0.12); }
+html:not(.dark) .bg-white\/40 { background-color: rgba(0,0,0,0.15); }
+html:not(.dark) .bg-white\/60 { background-color: rgba(0,0,0,0.2); }
+
+/* Restore white backgrounds inside gradient panels */
+html:not(.dark) .glass-panel-green .bg-white\/5 { background-color: rgba(255,255,255,0.05); }
+html:not(.dark) .glass-panel-green .bg-white\/10 { background-color: rgba(255,255,255,0.1); }
+html:not(.dark) .glass-panel-green .bg-white\/15 { background-color: rgba(255,255,255,0.15); }
+html:not(.dark) .glass-panel-green .bg-white\/20 { background-color: rgba(255,255,255,0.2); }
+html:not(.dark) .glass-panel-green .bg-white\/30 { background-color: rgba(255,255,255,0.3); }
+
+/* === Border overrides: white/* → black/* === */
+
+html:not(.dark) .border-white\/5 { border-color: rgba(0,0,0,0.04); }
+html:not(.dark) .border-white\/10 { border-color: rgba(0,0,0,0.07); }
+html:not(.dark) .border-white\/20 { border-color: rgba(0,0,0,0.1); }
+html:not(.dark) .border-white\/30 { border-color: rgba(0,0,0,0.15); }
+html:not(.dark) .border-white\/40 { border-color: rgba(0,0,0,0.2); }
+
+/* Restore white borders inside gradient panels */
+html:not(.dark) .glass-panel-green .border-white\/5 { border-color: rgba(255,255,255,0.05); }
+html:not(.dark) .glass-panel-green .border-white\/10 { border-color: rgba(255,255,255,0.1); }
+html:not(.dark) .glass-panel-green .border-white\/20 { border-color: rgba(255,255,255,0.2); }
+html:not(.dark) .glass-panel-green .border-white\/30 { border-color: rgba(255,255,255,0.3); }
+
+/* Divide */
+html:not(.dark) .divide-white\/5 > * + * { border-color: rgba(0,0,0,0.04); }
+
+/* === Accent colors: app-green → app-accent (blue) === */
+
+html:not(.dark) .text-app-green { color: #2D5BFF; }
+html:not(.dark) .bg-app-green { background-color: #2D5BFF; }
+html:not(.dark) .border-app-green { border-color: #2D5BFF; }
+html:not(.dark) .bg-app-green\/15 { background-color: rgba(45,91,255,0.1); }
+html:not(.dark) .border-app-green\/20 { border-color: rgba(45,91,255,0.2); }
+html:not(.dark) .border-app-green\/30 { border-color: rgba(45,91,255,0.3); }
+
+/* === CommandBar light mode === */
+
+html:not(.dark) .command-bar > div {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html:not(.dark) .command-bar input {
+  color: #1A1A1A !important;
+}
+
+html:not(.dark) .command-bar input::placeholder {
+  color: rgba(26, 26, 26, 0.4) !important;
+}
+
+html:not(.dark) .command-bar .bg-white {
+  background-color: #1A1A1A;
+  color: white;
+}
+
+html:not(.dark) .command-bar .bg-white\/5,
+html:not(.dark) .command-bar .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* === Header timeline pill === */
+
+html:not(.dark) .bg-gradient-to-r.from-\[rgba\(104\,231\,142\,0\.2\)\] {
+  background: rgba(45, 91, 255, 0.08);
+  border-color: rgba(45, 91, 255, 0.2);
+}
+
+/* === Scrollbar === */
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }

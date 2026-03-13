@@ -1,34 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react'
+import Header from './components/Header'
+import FilterBar from './components/FilterBar'
+import DocFan from './components/DocFan'
+import BottomPanels from './components/BottomPanels'
+import CommandBar from './components/CommandBar'
+import DataSection from './components/DataSection'
+import ThemeToggle from './components/ThemeToggle'
+
+function getInitialTheme(): 'dark' | 'light' {
+  const saved = localStorage.getItem('theme') as 'dark' | 'light' | null
+  if (saved) return saved
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [theme, setTheme] = useState<'dark' | 'light'>(getInitialTheme)
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme === 'dark') root.classList.add('dark')
+    else root.classList.remove('dark')
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="w-screen min-h-screen flex flex-col relative antialiased selection:bg-app-green selection:text-app-bg">
+      <Header />
+      <FilterBar />
+      <DocFan />
+      <BottomPanels />
+      <DataSection />
+      <CommandBar />
+      <ThemeToggle theme={theme} onToggle={toggleTheme} />
+    </div>
   )
 }
 
