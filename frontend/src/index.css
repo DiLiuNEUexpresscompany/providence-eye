@@ -46,6 +46,100 @@ body {
   background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 40%, rgba(104,231,142,0.9) 60%, #16a34a 100%);
 }
 
+/* ===== FEATURED CARD SHIMMER ===== */
+.card-sheen {
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 255, 255, 0.38) 35%,
+    transparent 45%
+  );
+  background-size: 200% 100%;
+  animation: card-shimmer 5s infinite linear;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 24px;
+}
+
+@keyframes card-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ===== FEATURED CARD FLIP ===== */
+.featured-flip-outer {
+  width: 100%;
+  height: 100%;
+  perspective: 900px;
+}
+
+.featured-flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 24px;
+  box-shadow: 0 0 40px -10px rgba(104, 231, 142, 0.5);
+}
+
+.featured-flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.featured-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.featured-flip-back-face {
+  transform: rotateY(180deg);
+}
+
+/* Card back face background */
+.featured-card-back-bg {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0a1628 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+html:not(.dark) .featured-card-back-bg {
+  background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 40%, #dce6ff 70%, #d0daff 100%);
+  border: 1px solid rgba(45, 91, 255, 0.15);
+}
+
+/* Back face text colors in light mode */
+html:not(.dark) .featured-card-back-bg .text-white {
+  color: #1A1A1A;
+}
+html:not(.dark) .featured-card-back-bg .text-white\/40 {
+  color: rgba(26, 26, 26, 0.45);
+}
+html:not(.dark) .featured-card-back-bg .text-white\/35 {
+  color: rgba(26, 26, 26, 0.4);
+}
+html:not(.dark) .featured-card-back-bg .text-white\/30 {
+  color: rgba(26, 26, 26, 0.35);
+}
+html:not(.dark) .featured-card-back-bg .text-white\/25 {
+  color: rgba(26, 26, 26, 0.3);
+}
+html:not(.dark) .featured-card-back-bg .text-white\/60 {
+  color: rgba(26, 26, 26, 0.6);
+}
+html:not(.dark) .featured-card-back-bg .border-white\/10 {
+  border-color: rgba(26, 26, 26, 0.08);
+}
+html:not(.dark) .featured-card-back-bg .bg-white\/10 {
+  background-color: rgba(26, 26, 26, 0.06);
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -90,6 +184,10 @@ html:not(.dark) .doc-card {
 
 html:not(.dark) .featured-card-bg {
   background: linear-gradient(135deg, #FFFFFF 0%, #D8E1FF 40%, #2D5BFF 60%, #1A3ABF 100%);
+}
+
+html:not(.dark) .featured-flip-inner {
+  box-shadow: 0 0 40px -10px rgba(45, 91, 255, 0.4);
 }
 
 html:not(.dark) .shadow-green-glow {
